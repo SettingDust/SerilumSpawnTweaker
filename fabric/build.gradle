@@ -30,9 +30,15 @@ dependencies {
     implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
     implementation project(":common")
 
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.0")))
+
     modImplementation "maven.modrinth:collective:1.20.1-6.66-forge+fabric"
     modImplementation "maven.modrinth:village-spawn-point:1.20.1-4.0-forge+fabric"
+    modImplementation "maven.modrinth:biome-spawn-point:1.20.1-2.0-forge+fabric"
     modImplementation "maven.modrinth:async-locator:1.20-1.3.0-fabric"
+
+    modImplementation "fuzs.forgeconfigapiport:forgeconfigapiport-fabric:8.0.0"
+    modRuntimeOnly "fuzs.forgeconfigscreens:forgeconfigscreens-fabric:8.0.2"
 }
 
 loom {
@@ -48,12 +54,19 @@ loom {
             setConfigName("Fabric Client")
             ideConfigGenerated(true)
             runDir("run")
+            vmArgs("-Dmixin.debug.export=true", "-Dmixin.debug.verbose=true")
         }
         server {
             server()
             setConfigName("Fabric Server")
             ideConfigGenerated(true)
             runDir("run")
+        }
+    }
+    mods {
+        "$mod_id" {
+            sourceSet sourceSets.main
+            sourceSet "main", project(":common")
         }
     }
 }

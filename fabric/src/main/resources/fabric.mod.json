@@ -11,11 +11,15 @@
 
   "license": "MIT",
   "icon": "assets/${mod_id}/icon.png",
-  "environment": "server",
-  "entrypoints": {},
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "settingdust.serilumspawntweaker.fabric.SerilumSpawnTweakerFabric"
+    ]
+  },
   "mixins": [
-    "${mod_id}-fabric.mixins.json",
-    "${mod_id}-common.mixins.json"
+    "${mod_id}.fabric.mixins.json",
+    "${mod_id}.common.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=0.14",
