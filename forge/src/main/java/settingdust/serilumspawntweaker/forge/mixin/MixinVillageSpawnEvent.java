@@ -18,7 +18,8 @@ public class MixinVillageSpawnEvent {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getCenterNearbyVillage(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos;"))
+                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getCenterNearbyVillage(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos;"),
+            remap = false)
     private static BlockPos spawntweaker$filterBlacklist(ServerLevel serverLevel) {
         return BlockPosFunctions.getCenterNearbyStructure(
                 serverLevel, HolderSet.direct(SerilumSpawnTweaker.spawnVillages(serverLevel)));

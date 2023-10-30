@@ -25,7 +25,8 @@ public class MixinBiomeSpawnEvent {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getCenterNearbyBiome(Lnet/minecraft/server/level/ServerLevel;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;"))
+                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getCenterNearbyBiome(Lnet/minecraft/server/level/ServerLevel;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;"),
+            remap = false)
     private static BlockPos serilumspawntweaker$findMoreBiome(
             ServerLevel serverLevel,
             String ignored,
@@ -42,24 +43,16 @@ public class MixinBiomeSpawnEvent {
 
     @ModifyArg(
             method = "onWorldLoad",
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V",
-                            ordinal = 2,
-                            remap = false))
+            at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V", ordinal = 2),
+            remap = false)
     private static String serilumspawntweaker$correctLog(String msg) {
         return "[Biome Spawn Point] Finding the nearest biome. This might take a few seconds.";
     }
 
     @ModifyArg(
             method = "onWorldLoad",
-            at =
-                    @At(
-                            value = "INVOKE",
-                            target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V",
-                            ordinal = 3,
-                            remap = false))
+            at = @At(value = "INVOKE", target = "Lorg/slf4j/Logger;info(Ljava/lang/String;)V", ordinal = 3),
+            remap = false)
     private static String serilumspawntweaker$logBiome(
             String msg, @Share("foundedBiome") LocalRef<Pair<BlockPos, Holder<Biome>>> foundedBiome) {
         return "[Biome Spawn Point] Biome found: "
@@ -72,7 +65,8 @@ public class MixinBiomeSpawnEvent {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getNearbyVillage(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"))
+                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getNearbyVillage(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"),
+            remap = false)
     private static BlockPos spawntweaker$filterBlacklist(ServerLevel serverLevel, BlockPos nearPos) {
         return BlockPosFunctions.getNearbyStructure(
                 serverLevel, HolderSet.direct(SerilumSpawnTweaker.spawnVillages(serverLevel)), nearPos);

@@ -13,12 +13,13 @@ import settingdust.serilumspawntweaker.SerilumSpawnTweaker;
 @Mixin(VillageSpawnEvent.class)
 public class MixinVillageSpawnEvent {
     @Redirect(
-            method = "onWorldLoad*",
+            method = "onWorldLoad",
             at =
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getCenterNearbyVillage(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos;"))
+                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getCenterNearbyVillage(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos;"),
+            remap = false)
     private static BlockPos spawntweaker$filterBlacklist(ServerLevel serverLevel) {
         return BlockPosFunctions.getCenterNearbyStructure(
                 serverLevel, HolderSet.direct(SerilumSpawnTweaker.spawnVillages(serverLevel)));
