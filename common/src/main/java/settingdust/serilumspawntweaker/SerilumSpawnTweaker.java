@@ -24,7 +24,7 @@ public class SerilumSpawnTweaker {
         builder.push("Village Spawn Point");
         EXCLUDE_VILLAGE = builder.defineList(
                 "Exclude Village",
-                () -> Lists.newArrayList(),
+                Lists::newArrayList,
                 it -> it instanceof String s && ResourceLocation.isValidResourceLocation(s));
         builder.pop();
         return builder.build();

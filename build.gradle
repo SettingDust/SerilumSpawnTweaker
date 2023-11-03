@@ -111,6 +111,13 @@ dependencies {
 tasks {
     shadowJar {
         configurations = [project.configurations.shadow]
+        archiveClassifier = ""
+    }
+    build {
+        dependsOn(shadowJar)
+    }
+    jar {
+        enabled = false
     }
 }
 

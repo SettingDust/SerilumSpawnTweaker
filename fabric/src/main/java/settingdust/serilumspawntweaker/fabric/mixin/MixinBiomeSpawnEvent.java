@@ -26,8 +26,7 @@ public class MixinBiomeSpawnEvent {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getCenterNearbyBiome(Lnet/minecraft/server/level/ServerLevel;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;"),
-            remap = false)
+                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getCenterNearbyBiome(Lnet/minecraft/server/level/ServerLevel;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;"))
     private static BlockPos serilumspawntweaker$findMoreBiome(
             ServerLevel serverLevel,
             String ignored,
@@ -67,8 +66,7 @@ public class MixinBiomeSpawnEvent {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getNearbyVillage(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"),
-            remap = false)
+                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getNearbyVillage(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"))
     private static BlockPos spawntweaker$filterBlacklist(ServerLevel serverLevel, BlockPos nearPos) {
         Pair<BlockPos, Holder<Structure>> structure = serverLevel
                 .getChunkSource()

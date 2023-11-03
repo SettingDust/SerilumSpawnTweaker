@@ -2,7 +2,6 @@ package settingdust.serilumspawntweaker.fabric.mixin;
 
 import com.mojang.datafixers.util.Pair;
 import com.natamus.biomespawnpoint_common_fabric.data.Constants;
-import com.natamus.collective_common_fabric.functions.BlockPosFunctions;
 import com.natamus.villagespawnpoint_common_fabric.events.VillageSpawnEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -22,8 +21,7 @@ public class MixinVillageSpawnEvent {
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getCenterNearbyVillage(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos;"),
-            remap = false)
+                                    "Lcom/natamus/collective_common_fabric/functions/BlockPosFunctions;getCenterNearbyVillage(Lnet/minecraft/server/level/ServerLevel;)Lnet/minecraft/core/BlockPos;"))
     private static BlockPos spawntweaker$filterBlacklist(ServerLevel serverLevel) {
         Pair<BlockPos, Holder<Structure>> structure = serverLevel
                 .getChunkSource()

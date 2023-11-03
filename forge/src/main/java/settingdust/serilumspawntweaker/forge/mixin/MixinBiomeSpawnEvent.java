@@ -3,10 +3,9 @@ package settingdust.serilumspawntweaker.forge.mixin;
 import com.llamalad7.mixinextras.sugar.Share;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.datafixers.util.Pair;
-import com.natamus.biomespawnpoint_common_fabric.data.Constants;
+import com.natamus.biomespawnpoint_common_forge.data.Constants;
 import com.natamus.biomespawnpoint_common_forge.events.BiomeSpawnEvent;
 import com.natamus.biomespawnpoint_common_forge.util.Util;
-import com.natamus.collective_common_forge.functions.BlockPosFunctions;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
@@ -23,12 +22,12 @@ import settingdust.serilumspawntweaker.SerilumSpawnTweaker;
 public class MixinBiomeSpawnEvent {
     @Redirect(
             method = "onWorldLoad",
+            remap = false,
             at =
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getCenterNearbyBiome(Lnet/minecraft/server/level/ServerLevel;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;"),
-            remap = false)
+                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getCenterNearbyBiome(Lnet/minecraft/server/level/ServerLevel;Ljava/lang/String;)Lnet/minecraft/core/BlockPos;"))
     private static BlockPos serilumspawntweaker$findMoreBiome(
             ServerLevel serverLevel,
             String ignored,
@@ -64,12 +63,12 @@ public class MixinBiomeSpawnEvent {
 
     @Redirect(
             method = "onWorldLoad",
+            remap = false,
             at =
                     @At(
                             value = "INVOKE",
                             target =
-                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getNearbyVillage(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"),
-            remap = false)
+                                    "Lcom/natamus/collective_common_forge/functions/BlockPosFunctions;getNearbyVillage(Lnet/minecraft/server/level/ServerLevel;Lnet/minecraft/core/BlockPos;)Lnet/minecraft/core/BlockPos;"))
     private static BlockPos spawntweaker$filterBlacklist(ServerLevel serverLevel, BlockPos nearPos) {
         Pair<BlockPos, Holder<Structure>> structure = serverLevel
                 .getChunkSource()
