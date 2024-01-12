@@ -8,13 +8,18 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.structure.Structure;
+import org.slf4j.Logger;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import settingdust.serilumspawntweaker.SerilumSpawnTweaker;
 
 @Mixin(VillageSpawnEvent.class)
 public class MixinVillageSpawnEvent {
+    @Shadow(remap = false) @Final private static Logger logger;
+
     @Redirect(
             method = "onWorldLoad",
             at =
@@ -33,7 +38,7 @@ public class MixinVillageSpawnEvent {
                         6400,
                         false);
         if (structure == null) return null;
-        Constants.logger.info("[Village Spawn Point] Village found: "
+        logger.info("[Village Spawn Point] Village found: "
                 + structure.getSecond().unwrapKey().orElseThrow().location());
         return structure.getFirst();
     }
