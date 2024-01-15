@@ -1,11 +1,11 @@
 package settingdust.serilumspawntweaker.forge.mixin;
 
 import com.mojang.datafixers.util.Pair;
-import com.natamus.biomespawnpoint_common_fabric.data.Constants;
 import com.natamus.villagespawnpoint_common_forge.events.VillageSpawnEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.SectionPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import org.slf4j.Logger;
@@ -38,9 +38,24 @@ public class MixinVillageSpawnEvent {
                         BlockPos.ZERO,
                         6400,
                         false);
-        if (structure == null) return null;
+        if (structure == null) {
+            logger.info("[Village Spawn Point] Can't find any villages");
+            return null;
+        }
+        final var structureStart = serverLevel
+                .structureManager()
+                .startsForStructure(
+                        SectionPos.of(structure.getFirst()),
+                        structure.getSecond().value())
+                .stream()
+                .findFirst()
+                .orElseThrow();
+
+        final var center = structureStart.getBoundingBox().getCenter();
+
         logger.info("[Village Spawn Point] Village found: "
-                + structure.getSecond().unwrapKey().orElseThrow().location());
-        return structure.getFirst();
+                    + structure.getSecond().unwrapKey().orElseThrow().location() + " center at "
+                    + center.toShortString());
+        return center;
     }
 }

@@ -9,6 +9,7 @@ import com.natamus.biomespawnpoint_common_fabric.util.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderSet;
+import net.minecraft.core.SectionPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.levelgen.structure.Structure;
@@ -77,9 +78,24 @@ public class MixinBiomeSpawnEvent {
                         nearPos,
                         6400,
                         false);
-        if (structure == null) return null;
+        if (structure == null) {
+            Constants.logger.info("[Biome Spawn Point] Can't find any villages");
+            return null;
+        }
+
+        final var structureStart = serverLevel
+                .structureManager()
+                .startsForStructure(
+                        SectionPos.of(structure.getFirst()),
+                        structure.getSecond().value())
+                .stream()
+                .findFirst()
+                .orElseThrow();
+        final var center = structureStart.getBoundingBox().getCenter();
+
         Constants.logger.info("[Biome Spawn Point] Village found: "
-                + structure.getSecond().unwrapKey().orElseThrow().location());
-        return structure.getFirst();
+                + structure.getSecond().unwrapKey().orElseThrow().location() + " center at "
+                + center.toShortString());
+        return center;
     }
 }
